@@ -1,0 +1,100 @@
+---
+title: "Dice Roll Analysis"
+output: html_document
+date: "2024-07-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Dice Roll Analysis
+
+This document analyses a series of runs of a dice roll generator. It simulates the roll of multiple dice the resultant numbers being summed. The back end is a C++ library that uses a normal distribution random number generator. It is supplied with Min, Max, Mean and Standard Deviation for the proposed dice roll.
+
+The C++ code is wrappered and called from Python. The exposed SetDice function is used to establish the dice rolling parameters.
+
+![](images/clipboard-3633080197.png){width="300" height="22"}
+
+dice: the number of sides on the dice.\
+rolls: the number of dice that are rolled in one roll.\
+plus: an optional parameter to add a value to each roll.
+
+The WriteRolls function is use to write a series of rolls to a file given the set parameters.
+
+![](images/clipboard-2173325840.png){width="267" height="23"}
+
+filename: the name of the file to be written to.\
+size: the number if dice rolls to be generated and written to file.
+
+Commonly in my tests I use this function to 10,000,000 values to the file.
+
+## Run 01
+
+3d6
+
+10,000,000 samples
+
+Dice: 6, Rolls: 3, Plus: 0, Mean: 10.500000, stddev: 2.958040, min: 3, max: 18
+
+```{r 3d6 analysis, echo=FALSE}
+rolls_tbl <- read.table("C:\\Data\\Rolls\\Data\\Results3d6.txt", head=FALSE)
+rolls <- rolls_tbl[[1]]
+cat("Mean:\t", mean(rolls))
+cat("\nStddev:\t", sd(rolls))
+cat("\nMin:\t", min(rolls))
+cat("\nMax:\t", max(rolls))
+```
+
+```{r 3d6 unique count plot}
+value_counts <- table(rolls)
+
+# Create a bar plot
+barplot(value_counts, main="Counts of Unique Values", xlab="Values", ylab="Frequency")
+```
+
+## Run 02
+
+10d6
+
+10,000,000 samples
+
+Dice: 6, Rolls: 10, Plus: 0, Mean: 35.000000, stddev: 5.400617, min: 10, max: 60
+
+```{r 3d6 analysis, echo=FALSE}
+rolls_tbl <- read.table("C:\\Data\\Rolls\\Data\\Results10d6.txt", head=FALSE)
+rolls <- rolls_tbl[[1]]
+cat("Mean:\t", mean(rolls))
+cat("\nStddev:\t", sd(rolls))
+cat("\nMin:\t", min(rolls))
+cat("\nMax:\t", max(rolls))
+```
+
+```{r 3d6 unique count plot}
+value_counts <- table(rolls)
+
+# Create a bar plot
+barplot(value_counts, main="Counts of Unique Values", xlab="Values", ylab="Frequency")
+```
+
+## Run 03
+
+20d6
+
+10,000,000 samples
+
+Dice: 6, Rolls: 10, Plus: 0, Mean: 35.000000, stddev: 5.400617, min: 10, max: 60
+
+```{r 3d6 analysis, echo=FALSE} 
+rolls_tbl <- read.table("C:\\Data\\Rolls\\Data\\Results10d6.txt", head=FALSE) 
+rolls <- rolls_tbl[[1]] 
+cat("Mean:\t", mean(rolls)) 
+cat("\nStddev:\t", sd(rolls)) 
+cat("\nMin:\t", min(rolls)) 
+cat("\nMax:\t", max(rolls))}
+```
+
+```{r 3d6 unique count plot} 
+value_counts <- table(rolls)  # Create a bar plot 
+barplot(value_counts, main="Counts of Unique Values", xlab="Values", ylab="Frequency")}
+```
