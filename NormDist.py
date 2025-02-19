@@ -1,5 +1,6 @@
 from cffi import FFI
 
+# Define C++ function that are being exported by the dll
 ffi = FFI()
 ffi.cdef("""
     int* getrolls(int arg);
@@ -8,8 +9,11 @@ ffi.cdef("""
     bool writerolls(char* filename, int numberofrolls);
 """)
 
+# Open dll
 lib = ffi.dlopen("normaldist.dll")
 
+# Define wrappers for the C++ functions
+# Some interesting formats for recieving and passing different data types here
 def GetRolls(size):
     array_ptr = lib.getrolls(size)
     numbers = ffi.unpack(array_ptr, size)

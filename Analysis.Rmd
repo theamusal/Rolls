@@ -25,9 +25,7 @@ The WriteRolls function is use to write a series of rolls to a file given the se
 ![](images/clipboard-2173325840.png){width="267" height="23"}
 
 filename: the name of the file to be written to.\
-size: the number if dice rolls to be generated and written to file.
-
-Commonly in my tests I use this function to 10,000,000 values to the file.
+size: the number if dice rolls to be generated and written to file. #Test 1 Commonly in my tests I use this function to 10,000,000 values to the file.
 
 ## Run 01
 
@@ -83,18 +81,27 @@ barplot(value_counts, main="Counts of Unique Values", xlab="Values", ylab="Frequ
 
 10,000,000 samples
 
-Dice: 6, Rolls: 10, Plus: 0, Mean: 35.000000, stddev: 5.400617, min: 10, max: 60
+Dice: 6, Rolls: 20, Plus: 0, Mean: 70.000000, stddev: 7.637626, min: 20, max: 120
 
-```{r 3d6 analysis, echo=FALSE} 
-rolls_tbl <- read.table("C:\\Data\\Rolls\\Data\\Results10d6.txt", head=FALSE) 
+```{r 3d6 analysis, echo=FALSE}
+rolls_tbl <- read.table("C:\\Data\\Rolls\\Data\\Results20d6.txt", head=FALSE) 
 rolls <- rolls_tbl[[1]] 
 cat("Mean:\t", mean(rolls)) 
 cat("\nStddev:\t", sd(rolls)) 
 cat("\nMin:\t", min(rolls)) 
-cat("\nMax:\t", max(rolls))}
+cat("\nMax:\t", max(rolls))
 ```
 
-```{r 3d6 unique count plot} 
-value_counts <- table(rolls)  # Create a bar plot 
-barplot(value_counts, main="Counts of Unique Values", xlab="Values", ylab="Frequency")}
+```{r 3d6 unique count plot}
+value_counts <- table(rolls)  
+# Create a bar plot 
+barplot(value_counts, main="Counts of Unique Values", xlab="Values", ylab="Frequency")
 ```
+
+# Test 2
+
+The previous test show a discrepancy in the standard deviation that is higher with lower numbers of rolls. I could be related to rounding in the random values that are created on a curve. Linear rounding would produce an error.
+
+##Method 2 A new C++ backend is developed that only predicts a linear random value for each dice, and then adds them up for each roll. This should be more accurate but may take longer to produce the results. To speed this up I have made the generator multithreaded and able to use Max-1 threads a computer has.
+
+We will reproduce the previous test with the new generator.
